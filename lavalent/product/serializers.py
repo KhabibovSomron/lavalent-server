@@ -1,6 +1,6 @@
-from dataclasses import field
+from dataclasses import field, fields
 from rest_framework import serializers
-from .models import Brand, Category, Product
+from .models import Brand, Category, Product, ProductImage
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -14,7 +14,7 @@ class BrandSerializer(serializers.ModelSerializer):
     """Список брендов"""
     class Meta:
         model = Brand
-        fields = ('id', 'title', 'url')
+        fields = ('id', 'title', 'url', 'image')
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -25,20 +25,17 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     """Детальное описание товара"""
-    # my_brand = serializers.SerializerMethodField()
-    # my_category = serializers.SerializerMethodField()
+    brand = serializers.SlugRelatedField(slug_field="title", read_only=True)
 
     class Meta:
         model = Product
-        exclude = ('poster', )
+        fields = ('id', 'vendor_code', 'price', 'material', 'brand', 'description', 'characteristic')
 
-    # def get_my_brand(self, obj):
-    #     brand = Brand.objects.filter(id=obj.brand)
-    #     serializer = BrandSerializer(brand)
-    #     return (serializer.data)
 
-    # def get_my_category(self, obj):
-    #     category = Category.objects.filter(id=obj.category)
-    #     serializer = CategorySerializer(category)
-    #     return (serializer.data)
+class ProductImageSerializer(serializers.ModelSerializer):
+    """Список Изображения товара"""
+
+    class Meta:
+        model = ProductImage
+        exclude = ('product',)
     

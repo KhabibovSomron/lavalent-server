@@ -1,7 +1,7 @@
 from cgitb import lookup
 from unicodedata import category
 from django_filters import rest_framework as filters
-from .models import Brand, Product
+from .models import Brand, Product, ProductImage
 
 class CharFilterInFilter(filters.BaseInFilter, filters.CharFilter):
     pass
@@ -18,3 +18,9 @@ class ProductFilter(filters.FilterSet):
     class Meta:
         model = Product
         fields = ['category', 'brand']
+
+class ProductImageFilter(filters.FilterSet):
+    product = filters.CharFilter(lookup_expr='in')
+    class Meta:
+        model = ProductImage
+        fields = ['product']

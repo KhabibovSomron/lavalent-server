@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from .services import BrandFilter, ProductFilter
-from .models import Brand, Category, Product
-from .serializers import BrandSerializer, CategorySerializer, ProductDetailSerializer, ProductSerializer
+from .services import BrandFilter, ProductFilter, ProductImageFilter
+from .models import Brand, Category, Product, ProductImage
+from .serializers import BrandSerializer, CategorySerializer, ProductDetailSerializer, ProductImageSerializer, ProductSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
@@ -23,7 +23,15 @@ class ProductListView(ListAPIView):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
 
+
 class ProductDetailView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
     lookup_field = "pk"
+
+
+class ProductImageView(ListAPIView):
+    queryset = ProductImage.objects.all()
+    serializer_class = ProductImageSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductImageFilter
