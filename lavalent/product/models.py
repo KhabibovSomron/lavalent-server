@@ -48,7 +48,7 @@ class KeyWord(models.Model):
 class Product(models.Model):
     """Товар"""
     vendor_code = models.BigIntegerField("Артикул", default=0)
-    material  = models.CharField("Материал", max_length=120)
+    material  = models.CharField("Материал", max_length=120, default="none")
     description = models.TextField("Описания товара")
     characteristic = models.TextField("Характеристики товара")
     price = models.IntegerField("Цена товара")
@@ -68,7 +68,7 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, verbose_name="Товар", on_delete=models.CASCADE, default=1)
-    image = models.ImageField("Изображение товара", upload_to=f"images/products/{product}/")
+    image = models.ImageField("Изображение товара", upload_to=f"images/products/images/")
 
     def __str__(self) -> str:
         return f'{self.product}'
