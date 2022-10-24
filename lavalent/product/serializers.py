@@ -1,6 +1,7 @@
 from dataclasses import field, fields
+from xml.etree.ElementInclude import include
 from rest_framework import serializers
-from .models import Brand, Category, Product, ProductImage
+from .models import Brand, Category, Product, ProductImage, ProductSize
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -38,4 +39,13 @@ class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
         exclude = ('product',)
+
+
+class ProductSizesSerializer(serializers.ModelSerializer):
+    """Список размеров товара"""
+
+    class Meta:
+        model = ProductSize
+        exclude = ('product',)
+
     

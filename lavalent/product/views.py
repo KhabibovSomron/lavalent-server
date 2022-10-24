@@ -1,13 +1,15 @@
+from ast import List
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from .services import BrandFilter, ProductFilter, ProductImageFilter
-from .models import Brand, Category, Product, ProductImage
-from .serializers import BrandSerializer, CategorySerializer, ProductDetailSerializer, ProductImageSerializer, ProductSerializer
+from .services import BrandFilter, ProductFilter, ProductImageFilter, ProductSizeFilter
+from .models import Brand, Category, Product, ProductImage, ProductSize
+from .serializers import BrandSerializer, CategorySerializer, ProductDetailSerializer, ProductImageSerializer, ProductSerializer, ProductSizesSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
 class CategoryListView(ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    pagination_class = None
 
 
 class BrandListView(ListAPIView):
@@ -15,6 +17,7 @@ class BrandListView(ListAPIView):
     serializer_class = BrandSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = BrandFilter
+    pagination_class = None
 
 
 class ProductListView(ListAPIView):
@@ -24,10 +27,12 @@ class ProductListView(ListAPIView):
     filterset_class = ProductFilter
 
 
+
 class ProductDetailView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
     lookup_field = "pk"
+    pagination_class = None
 
 
 class ProductImageView(ListAPIView):
@@ -35,3 +40,11 @@ class ProductImageView(ListAPIView):
     serializer_class = ProductImageSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductImageFilter
+    pagination_class = None
+
+class ProductSizesView(ListAPIView):
+    queryset = ProductSize.objects.all()
+    serializer_class = ProductSizesSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductSizeFilter
+    pagination_class = None
