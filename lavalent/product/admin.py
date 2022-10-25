@@ -19,7 +19,7 @@ class KeyWordAdmin(admin.ModelAdmin):
 
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ("id", "image")
+    list_display = ("id", "image", 'product')
 
 @admin.register(ProductSize)
 class ProductSizeAdmin(admin.ModelAdmin):
