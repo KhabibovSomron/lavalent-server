@@ -1,5 +1,3 @@
-from dataclasses import field, fields
-from xml.etree.ElementInclude import include
 from rest_framework import serializers
 from .models import Brand, Category, Product, ProductImage, ProductSize
 
@@ -18,11 +16,18 @@ class BrandSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'url', 'image')
 
 
+class ShortBrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = ('id', 'title')
+
 class ProductSerializer(serializers.ModelSerializer):
     """Список товаров"""
+    brand = ShortBrandSerializer(read_only=True)
     class Meta:
         model = Product
         fields = ('id', 'vendor_code', 'price', 'material', 'poster', 'category', 'brand')
+
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     """Детальное описание товара"""

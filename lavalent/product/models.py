@@ -26,7 +26,7 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.title
-
+    
     class Meta:
         verbose_name = "Бренд"
         verbose_name_plural = "Бренд"
@@ -55,7 +55,7 @@ class Product(models.Model):
     poster = models.ImageField("Постер", upload_to="images/products/posters/", default="none")
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL, null=True)
     brand = models.ForeignKey(Brand, verbose_name="Бренд", on_delete=models.SET_NULL, null=True)
-    
+    keywords = models.ManyToManyField(KeyWord, verbose_name="Ключевые слова")
     
 
     def __str__(self) -> str:

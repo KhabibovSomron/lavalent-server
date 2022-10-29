@@ -15,6 +15,7 @@ class BrandFilter(filters.FilterSet):
         model = Brand
         fields = ['category']
 
+
 class ProductFilter(filters.FilterSet):
     category = filters.CharFilter(lookup_expr="in")
     brand = filters.CharFilter(lookup_expr="in")
