@@ -28,7 +28,7 @@ class ProductListView(ListAPIView):
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
     filterset_class = ProductFilter
     pagination_class = PaginationProducts
-    ordering_fields = ['price', 'vendor_code']
+    ordering_fields = ['price', 'vendor_code', 'isRecommended', 'isNew']
 
 
 class ProductListByIdView(ListAPIView):
@@ -69,7 +69,7 @@ class ProductSearchView(ListAPIView):
     pagination_class = PaginationProducts
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     search_fields = ['vendor_code', 'keywords__title']
-    ordering_fields = ['price', 'vendor_code']
+    ordering_fields = ['price', 'vendor_code', 'isRecommended', 'isNew']
 
 
 class BrandByIdView(RetrieveAPIView):

@@ -32,10 +32,10 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductDetailSerializer(serializers.ModelSerializer):
     """Детальное описание товара"""
     brand = serializers.SlugRelatedField(slug_field="title", read_only=True)
-
+    sizes = serializers.SlugRelatedField(slug_field="size", read_only=True, many=True)
     class Meta:
         model = Product
-        fields = ('id', 'vendor_code', 'price', 'material', 'brand', 'description', 'characteristic')
+        fields = ('id', 'vendor_code', 'price', 'material', 'brand', 'description', 'characteristic', 'sizes')
 
 
 class ProductImageSerializer(serializers.ModelSerializer):

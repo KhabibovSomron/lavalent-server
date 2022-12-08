@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 
 # Create your models here.
@@ -45,6 +46,18 @@ class KeyWord(models.Model):
 
 
 
+class ProductSize(models.Model):
+    """Размер товара"""
+    size = models.CharField("Размер", max_length=100)
+
+    def __str__(self) -> str:
+        return self.size
+
+    class Meta:
+        verbose_name = "Размеры товаров"
+        verbose_name_plural = "Размеры товаров"
+
+
 class Product(models.Model):
     """Товар"""
     vendor_code = models.BigIntegerField("Артикул", default=0)
@@ -56,6 +69,9 @@ class Product(models.Model):
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL, null=True)
     brand = models.ForeignKey(Brand, verbose_name="Бренд", on_delete=models.SET_NULL, null=True)
     keywords = models.ManyToManyField(KeyWord, verbose_name="Ключевые слова")
+    sizes = models.ManyToManyField(ProductSize, verbose_name="Размеры")
+    isRecommended = models.BooleanField("Рекомендован", default=False)
+    isNew = models.BooleanField("Новинка", default=False)
     
 
     def __str__(self) -> str:
@@ -76,16 +92,3 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name = "Изображения товаров"
         verbose_name_plural = "Изображения товаров"
-
-
-class ProductSize(models.Model):
-    """Размер товара"""
-    size = models.CharField("Размер", max_length=100)
-    product = models.ForeignKey(Product, verbose_name="Товар", on_delete=models.CASCADE, default=1)
-
-    def __str__(self) -> str:
-        return self.size
-
-    class Meta:
-        verbose_name = "Размеры товаров"
-        verbose_name_plural = "Размеры товаров"
