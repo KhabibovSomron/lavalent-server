@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .services import BrandFilter, PaginationProducts, ProductFilter, ProductImageFilter, ProductSizeFilter
-from .models import Brand, Category, Product, ProductImage, ProductSize
-from .serializers import BrandSerializer, CategorySerializer, ProductDetailSerializer, ProductImageSerializer, ProductSerializer, ProductSizesSerializer, ShortBrandSerializer
+from .models import Brand, Category, Product, ProductImage
+from .serializers import BrandSerializer, CategorySerializer, ProductDetailSerializer, ProductImageSerializer, ProductSerializer, NextPreviousProductSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
@@ -56,13 +56,6 @@ class ProductImageView(ListAPIView):
     filterset_class = ProductImageFilter
     pagination_class = None
 
-class ProductSizesView(ListAPIView):
-    queryset = ProductSize.objects.all()
-    serializer_class = ProductSizesSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = ProductSizeFilter
-    pagination_class = None
-
 class ProductSearchView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -70,13 +63,6 @@ class ProductSearchView(ListAPIView):
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     search_fields = ['vendor_code', 'keywords__title']
     ordering_fields = ['price', 'vendor_code', 'isRecommended', 'isNew']
-
-
-class BrandByIdView(RetrieveAPIView):
-    queryset = Brand.objects.all()
-    serializer_class = ShortBrandSerializer
-    lookup_field = "pk"
-    pagination_class = None
 
 class RandomProductView(ListAPIView):
     queryset = Product.objects.all()
@@ -98,3 +84,26 @@ class RandomProductView(ListAPIView):
             products.append(product)
 
         return products
+
+class OnlyIdProductListView(ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = NextPreviousProductSerializer
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
+    filterset_class = ProductFilter
+    pagination_class = None
+    ordering_fields = ['price', 'vendor_code', 'isRecommended', 'isNew']
+
+
+class OnlyIdProductSearchView(ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = NextPreviousProductSerializer
+    pagination_class = None
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    search_fields = ['vendor_code', 'keywords__title']
+    ordering_fields = ['price', 'vendor_code', 'isRecommended', 'isNew']
+
+
+        
+    
+
+        

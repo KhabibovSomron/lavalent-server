@@ -3,7 +3,7 @@ from .models import Brand, Product, ProductImage, ProductSize
 from rest_framework.pagination import PageNumberPagination
 
 class PaginationProducts(PageNumberPagination):
-    page_size = 60
+    page_size = 3
     max_page_size = 1000
 
 class CharFilterInFilter(filters.BaseInFilter, filters.CharFilter):

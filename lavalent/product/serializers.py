@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Brand, Category, Product, ProductImage, ProductSize
+from .models import Brand, Category, Product, ProductImage
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -45,12 +45,9 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         exclude = ('product',)
 
-
-class ProductSizesSerializer(serializers.ModelSerializer):
-    """Список размеров товара"""
-
+class NextPreviousProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductSize
-        exclude = ('product',)
+        model = Product
+        fields = ('id', )
 
     
